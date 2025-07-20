@@ -17,8 +17,11 @@ public class MeteorSpawner : MonoBehaviour
             var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
             Instantiate(meteorPrefab, spawnPoint, Quaternion.identity);
 
-            if (spawnRate >= 0.5)
-                spawnRate -= Time.deltaTime * 10;
+            if (spawnRate >= 1)
+                spawnRate -= Time.deltaTime * 5;
+
+            if (spawnRate < 1)
+                spawnRate = 1f;
             
             timeSinceLastSpawn = spawnRate;
         }
