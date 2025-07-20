@@ -3,8 +3,11 @@ using UnityEngine;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameObject bulletGameObject;
+    [SerializeField] private float shootingCooldown = 0.5f;
     
     private GameObject playerGameObject;
+    private float timeSinceLastShot = 0;
+    private int power = 1;
 
     private void Awake()
     {
@@ -15,8 +18,13 @@ public class PlayerShooting : MonoBehaviour
     {
         RotatePlayerToMouse();
         
-        if (Input.GetMouseButtonDown(0))
+        timeSinceLastShot += Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(0) && timeSinceLastShot >= shootingCooldown)
+        {
             ShootBullet();
+            timeSinceLastShot = 0;
+        }
     }
 
     private void RotatePlayerToMouse()
@@ -32,6 +40,17 @@ public class PlayerShooting : MonoBehaviour
 
     private void ShootBullet()
     {
+        bulletGameObject.GetComponent<Bullet>().SetDamage(power + 9);
         Instantiate(bulletGameObject, playerGameObject.transform.position, playerGameObject.transform.rotation);
+    }
+
+    public int IncreasePower()
+    {
+        return ++power;
+    }
+
+    public int GetPower()
+    {
+        return power;
     }
 }

@@ -3,8 +3,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 	[SerializeField] private float speed = 5f;
-	[SerializeField] private float damage = 10f;
+	[SerializeField] private int damage = 10;
 	[SerializeField] private float lifeTimeInSeconds = 3f;
+
+	public void SetDamage(int amount)
+	{
+		damage = amount;
+	}
 
 	private void Update()
 	{
@@ -19,7 +24,7 @@ public class Bullet : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "Obstacle")
 		{
-			Debug.Log("Hit!");
+			collision.gameObject.GetComponent<Meteor>().ApplyDamage(damage);
 			Destroy(gameObject);
 		}
 	}
