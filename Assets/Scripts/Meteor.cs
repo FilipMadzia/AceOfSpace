@@ -1,14 +1,17 @@
+using System;
 using UnityEngine;
 
 public class Meteor : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 50;
+    [SerializeField] private uint maxHealth = 50;
     [SerializeField] private float speed = 1f;
     [SerializeField] private float rotationSpeed = 12f;
     [SerializeField] private RectTransform healthBar;
     [SerializeField] private GameObject sprite;
+    
+    public EventHandler OnDestroyed;
 
-    private int health;
+    private uint health;
 
     private void Awake()
     {
@@ -24,7 +27,7 @@ public class Meteor : MonoBehaviour
         sprite.transform.Rotate(0, 0, Time.deltaTime * rotationSpeed);
     }
 
-    public void ApplyDamage(int damage)
+    public void ApplyDamage(uint damage)
     {
         health -= damage;
         
@@ -34,7 +37,7 @@ public class Meteor : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            GameObject.Find("Power").GetComponent<Power>().IncreasePower();
+            OnDestroyed.Invoke(this, EventArgs.Empty);
         }
     }
 }

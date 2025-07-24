@@ -3,13 +3,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 	[SerializeField] private float speed = 5f;
-	[SerializeField] private int damage = 10;
+	[SerializeField] private uint damage = 10;
 	[SerializeField] private float lifeTimeInSeconds = 3f;
-
-	public void SetDamage(int amount)
-	{
-		damage = amount;
-	}
 
 	private void Update()
 	{

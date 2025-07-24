@@ -15,7 +15,8 @@ public class MeteorSpawner : MonoBehaviour
         if (timeSinceLastSpawn <= 0f)
         {
             var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(meteorPrefab, spawnPoint, Quaternion.identity);
+            var meteor = Instantiate(meteorPrefab, spawnPoint, Quaternion.identity);
+            meteor.GetComponent<Meteor>().OnDestroyed += (_, _) => Debug.Log("Meteor destroyed");
 
             if (spawnRate >= 1)
                 spawnRate -= Time.deltaTime * 5;
